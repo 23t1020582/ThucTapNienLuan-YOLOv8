@@ -48,9 +48,14 @@ source venv/bin/activate
 # 3. Cài đặt các thư viện phụ thuộc
 pip install -r requirements.txt
 
+
+
 ---
 
-## 2. Cấu trúc thư mục dự án
+## 2.cấu trúc thư mục dự án
+
+```bash
+
 ├── weights/
 │   └── best.pt               # Trọng số YOLOv8n đã huấn luyện tốt nhất
 ├── dataset/
