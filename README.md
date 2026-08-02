@@ -2,7 +2,7 @@
 
 > Báo cáo Thực tập Niên luận  
 > Đề tài: Nghiên cứu, xây dựng ứng dụng nhận diện vật dụng cá nhân và mệnh giá tiền tệ hỗ trợ người thị giác kém dựa trên YOLOv8  
-> Tác giả: [Họ và Tên] - [Mã Số Sinh Viên]
+> Tác giả: [Phạm Quang Tuân] - [23t1020582]
 
 ---
 
