@@ -94,6 +94,7 @@ cd ThucTapNienLuan-YOLOv8
 ---
 
 ## 2. Tạo môi trường ảo
+Tải dữ liệu: Tải file nén dữ liệu dataset.zip và giải nén vào thư mục gốc của dự án.
 
 Windows
 
