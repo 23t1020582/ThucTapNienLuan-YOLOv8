@@ -47,6 +47,9 @@ source venv/bin/activate
 
 # 3. Cài đặt các thư viện phụ thuộc
 pip install -r requirements.txt
+
+---
+
 ## 2. Cấu trúc thư mục dự án
 ├── weights/
 │   └── best.pt               # Trọng số YOLOv8n đã huấn luyện tốt nhất
@@ -75,3 +78,4 @@ Thử nghiệm dự đoán và vẽ khung trên tập test:
 Chạy ứng dụng giao diện trực quan Streamlit:
 
 #streamlit run app.py
+---
