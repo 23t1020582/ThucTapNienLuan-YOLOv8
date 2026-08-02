@@ -47,6 +47,8 @@ source venv/bin/activate
 
 # 3. Cài đặt các thư viện phụ thuộc
 pip install -r requirements.txt
+bash```
+
 2. Cấu trúc thư mục dự án
 Plaintext
 ├── weights/
