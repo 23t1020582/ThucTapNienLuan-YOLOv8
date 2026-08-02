@@ -31,7 +31,7 @@ Dự án xây dựng chuỗi xử lý End-to-End thực hiện 2 nhiệm vụ ch
 
 **Cài đặt từng bước:**
 
-
+```bash
 # 1. Clone repository về máy
 git clone [https://github.com/23t1020582/ThucTapNienLuan-YOLOv8.git](https://github.com/23t1020582/ThucTapNienLuan-YOLOv8.git)
 cd ThucTapNienLuan-YOLOv8
@@ -76,23 +76,23 @@ Quản lý Trọng số: Trọng số tốt nhất sau khi huấn luyện best.p
 Lệnh chạy huấn luyện (Train) và đánh giá (Evaluation)
 Chạy script huấn luyện mô hình YOLOv8n trên tập dữ liệu đã chuẩn bị:
 
-Bash
+```bash
 python train.py
 Đánh giá mô hình YOLOv8:
 
-Bash
+```Bash
 python val.py
 Thử nghiệm dự đoán và vẽ khung trên tập test:
 
-Bash
+```Bash
 python predict.py
 Đo tốc độ trễ & hiệu năng hệ thống (Benchmark):
 
-Bash
+```Bash
 python benchmark.py
 Chạy ứng dụng giao diện trực quan Streamlit:
 
-Bash
+```Bash
 streamlit run app.py
 
 
