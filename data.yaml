@@ -1,0 +1,9 @@
+# Cấu hình đường dẫn tập dữ liệu
+path: ./dataset
+train: train/images
+val: valid/images
+test: test/images
+
+# Số lượng và danh sách 6 lớp đối tượng
+nc: 6
+names: ['Bottle', 'Mobile Phone', 'Keys', 'Wallet', '50k_VND', '500k_VND']
