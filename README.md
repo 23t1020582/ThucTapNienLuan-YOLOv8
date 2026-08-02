@@ -1,102 +1,221 @@
-# Hệ Thống Nhận Diện Vật Dụng Cá Nhân Và Mệnh Giá Tiền Tự Động
+# 🚀 Hệ Thống Nhận Diện Vật Dụng Cá Nhân Và Mệnh Giá Tiền Tự Động
 
-> Báo cáo Thực tập Niên luận  
-> Đề tài: Xây dựng ứng dụng phân loại vật dụng cá nhân thiết yếu hỗ trợ sinh hoạt độc lập cho người khiếm thị dựa trên mô hình YOLOv8n trên nền tảng Streamlit Localhost  
-> Tác giả: Phạm Quang Tuân - 23t1020582
-
----
-
-## Giới thiệu dự án
-
-Dự án xây dựng chuỗi xử lý End-to-End thực hiện 2 nhiệm vụ chính phục vụ hỗ trợ người thị giác kém:
-
-1. **Phân loại vật dụng cá nhân (YOLOv8n):** Phân loại Chai nước (`bottle`), Điện thoại (`mobile_phone`), Chìa khóa (`keys`) và Ví tiền (`wallet`).
-2. **Nhận biết mệnh giá tiền tệ (YOLOv8n):** Phân biệt chính xác các tờ tiền polyme Việt Nam Đồng bao gồm tờ 50.000 VNĐ (`50k_VND`) và tờ 500.000 VNĐ (`500k_VND`).
-
-**Kết quả thực nghiệm chính xác (Tập kiểm thử 50 ảnh):**
-
-* **mAP@0.5 (Detection):** `90.4%`
-* **Precision (Độ chính xác):** `89.2%`
-* **Recall (Độ phủ):** `87.3%`
-* **Tốc độ suy luận YOLOv8n (CPU):** `45.20 ms` (~`22.1 FPS` trên CPU)
-* **Dung lượng mô hình:** `6.2 MB` (Tối ưu thời gian thực cho thiết bị di động)
+> **Thực tập Niên luận**  
+> **Đề tài:** Xây dựng ứng dụng phân loại vật dụng cá nhân thiết yếu hỗ trợ sinh hoạt độc lập cho người khiếm thị dựa trên mô hình **YOLOv8n** trên nền tảng **Streamlit**.
+>
+> **Tác giả:** Phạm Quang Tuân - 23T1020582
 
 ---
 
-## 1. Hướng dẫn cài đặt môi trường
+# 📌 Giới thiệu
 
-**Yêu cầu hệ thống:**
+Đây là hệ thống hỗ trợ người khiếm thị nhận diện vật dụng cá nhân và mệnh giá tiền Việt Nam bằng mô hình **YOLOv8n** kết hợp giao diện **Streamlit**.
 
-* `Python >= 3.8` (Khuyên dùng Python 3.9 hoặc 3.10)
+Hệ thống hoạt động theo thời gian thực thông qua webcam và cung cấp kết quả bằng hình ảnh cùng thông báo bằng giọng nói.
 
-**Cài đặt từng bước:**
+---
+
+# ✨ Chức năng
+
+## 🧴 Nhận diện vật dụng cá nhân
+
+- Bottle
+- Mobile Phone
+- Keys
+- Wallet
+
+## 💵 Nhận diện mệnh giá tiền
+
+- 50.000 VNĐ
+- 500.000 VNĐ
+
+---
+
+# 📊 Kết quả thực nghiệm
+
+| Chỉ số | Giá trị |
+|---------|---------|
+| mAP@0.5 | **90.4%** |
+| Precision | **89.2%** |
+| Recall | **87.3%** |
+| Inference Time | **45.20 ms** |
+| FPS (CPU) | **22.1 FPS** |
+| Model Size | **6.2 MB** |
+
+---
+
+# 🛠 Công nghệ sử dụng
+
+- Python
+- YOLOv8n
+- Ultralytics
+- OpenCV
+- Streamlit
+- NumPy
+- PyTorch
+
+---
+
+# 📂 Cấu trúc thư mục
+
+```text
+ThucTapNienLuan-YOLOv8/
+│
+├── app.py
+├── train.py
+├── val.py
+├── predict.py
+├── benchmark.py
+├── data.yaml
+├── requirements.txt
+├── README.md
+│
+├── dataset/
+│   ├── train/
+│   ├── valid/
+│   └── test/
+│
+└── weights/
+    └── best.pt
+```
+
+---
+
+# ⚙️ Cài đặt
+
+## 1. Clone project
 
 ```bash
-# 1. Clone repository về máy
-git clone [https://github.com/23t1020582/ThucTapNienLuan-YOLOv8.git](https://github.com/23t1020582/ThucTapNienLuan-YOLOv8.git)
-cd ThucTapNienLuan-YOLOv8
+git clone https://github.com/23t1020582/ThucTapNienLuan-YOLOv8.git
 
-# 2. Tạo và kích hoạt môi trường ảo
+cd ThucTapNienLuan-YOLOv8
+```
+
+---
+
+## 2. Tạo môi trường ảo
+
+Windows
+
+```bash
 python -m venv venv
 
-# On Windows:
 venv\Scripts\activate
+```
 
-# On Linux/macOS:
+Linux / macOS
+
+```bash
+python3 -m venv venv
+
 source venv/bin/activate
+```
 
-# 3. Cài đặt các thư viện phụ thuộc
+---
+
+## 3. Cài đặt thư viện
+
+```bash
 pip install -r requirements.txt
-----
+```
 
-2. Hướng dẫn tải & Chuẩn bị Tập dữ liệu (Dataset)
-Tải dữ liệu: Tải file nén dữ liệu dataset.zip và giải nén vào thư mục gốc của dự án.
+---
 
-Cấu trúc thư mục dự án:
+# 📁 Chuẩn bị Dataset
 
-'''bash
+Giải nén file **dataset.zip** vào thư mục gốc của dự án.
 
-Plaintext
-├── weights/
-│   └── best.pt               # Trọng số YOLOv8n đã huấn luyện tốt nhất
-├── dataset/
-│   ├── train/                # Tập ảnh & nhãn huấn luyện (350 ảnh)
-│   ├── valid/                # Tập ảnh & nhãn kiểm định (100 ảnh)
-│   └── test/                 # Tập ảnh & nhãn kiểm thử (50 ảnh)
-├── data.yaml                 # File khai báo tập dữ liệu và 6 lớp đối tượng
-├── train.py                  # Script huấn luyện mô hình YOLOv8n
-├── val.py                    # Script tính toán chỉ số mAP50, Precision, Recall
-├── predict.py                # Script chạy thử nghiệm nhận diện & vẽ khung ảnh
-├── benchmark.py              # Script đánh giá hiệu năng và đo tốc độ suy luận (FPS)
-├── app.py                    # Giao diện Web App Streamlit tương tác người dùng
-├── requirements.txt          # Danh sách thư viện cần thiết
-└── README.md                 # Tài liệu hướng dẫn dự án
-Quản lý Trọng số: Trọng số tốt nhất sau khi huấn luyện best.pt được lưu trữ tại thư mục weights/best.pt. File trọng số mặc định yolov8n.pt sẽ tự động được tải về từ Ultralytics khi chạy lệnh huấn luyện lần đầu.
+```
+dataset/
+├── train/
+├── valid/
+└── test/
+```
 
-Lệnh chạy huấn luyện (Train) và đánh giá (Evaluation)
-Chạy script huấn luyện mô hình YOLOv8n trên tập dữ liệu đã chuẩn bị:
+Trong đó
+
+- Train: **350 ảnh**
+- Validation: **100 ảnh**
+- Test: **50 ảnh**
+
+---
+
+# 🎯 Huấn luyện mô hình
 
 ```bash
 python train.py
-Đánh giá mô hình YOLOv8:
+```
 
-```Bash
+---
+
+# 📈 Đánh giá mô hình
+
+```bash
 python val.py
-Thử nghiệm dự đoán và vẽ khung trên tập test:
+```
 
-```Bash
+---
+
+# 🖼 Thử nghiệm dự đoán
+
+```bash
 python predict.py
-Đo tốc độ trễ & hiệu năng hệ thống (Benchmark):
+```
 
-```Bash
+---
+
+# ⚡ Benchmark
+
+```bash
 python benchmark.py
-Chạy ứng dụng giao diện trực quan Streamlit:
+```
 
-```Bash
+---
+
+# 🌐 Chạy ứng dụng
+
+```bash
 streamlit run app.py
+```
 
+Sau khi chạy, trình duyệt sẽ tự mở tại
 
+```
+http://localhost:8501
+```
 
+---
 
+# 📷 Demo
 
+> Thêm ảnh hoặc GIF demo của hệ thống tại đây.
 
+```
+demo/demo.gif
+```
+
+---
+
+# 📚 Dataset
+
+Tập dữ liệu gồm **500 ảnh**, chia thành:
+
+| Tập dữ liệu | Số lượng |
+|-------------|----------|
+| Train | 350 |
+| Validation | 100 |
+| Test | 50 |
+
+---
+
+# 👨‍💻 Tác giả
+
+**Phạm Quang Tuân**
+
+Đại học Khoa học Huế
+
+---
+
+# 📄 Giấy phép
+
+Dự án được phát triển phục vụ mục đích học tập và nghiên cứu.
