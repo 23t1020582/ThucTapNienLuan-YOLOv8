@@ -1,69 +1,49 @@
+# Hệ Thống Nhận Diện Vật Dụng Cá Nhân Và Mệnh Giá Tiền Tự Động
 
-# Hệ Thống Nhận Diện Vật Dụng Cá Nhân & Mệnh Giá Tiền Hỗ Trợ Người Thị Giác Kém
-
-[![Python](https://img.shields.io/badge/Python-3.9%2B-blue.svg)](https://www.python.org/)
-[![YOLOv8](https://img.shields.io/badge/YOLOv8-Ultralytics-realtime.svg)](https://github.com/ultralytics/ultralytics)
-[![Streamlit](https://img.shields.io/badge/Streamlit-UI%20App-red.svg)](https://streamlit.io/)
-[![License](https://img.shields.io/badge/Academic-Thesis%20Report-green.svg)]()
-
-> **Báo cáo Thực tập Niên luận**  
-> **Đề tài:** Xây dựng ứng dụng phân loại vật dụng cá nhân thiết yếu hỗ trợ sinh hoạt độc lập cho người khiếm thị dựa trên mô hình YOLOv8n trên nền tảng Streamlit Localhost  
-> **Tác giả:** [Họ và Tên Sinh Viên] - [Mã Số Sinh Viên]  
-> **Khoa/Trường:** Công nghệ Thông tin  
-> **Repository:** [ThucTapNienLuan-YOLOv8](https://github.com/23t1020582/ThucTapNienLuan-YOLOv8)
+> Báo cáo Thực tập Niên luận  
+> Đề tài: Nghiên cứu, xây dựng ứng dụng nhận diện vật dụng cá nhân và mệnh giá tiền tệ hỗ trợ người thị giác kém dựa trên YOLOv8  
+> Tác giả: [Họ và Tên] - [Mã Số Sinh Viên]
 
 ---
 
-## 📌 1. Giới thiệu tổng quan
+## Giới thiệu dự án
 
-Dự án xây dựng một giải pháp thị giác máy tính **End-to-End** hỗ trợ người thị giác kém/khiếm thị trong việc nhận biết các vật dụng sinh hoạt hàng ngày và phân biệt các mệnh giá tiền Việt Nam Đồng (VND). 
+Dự án xây dựng chuỗi xử lý End-to-End thực hiện 2 nhiệm vụ chính phục vụ hỗ trợ người thị giác kém:
 
-Hệ thống sử dụng kiến trúc mô hình **YOLOv8n (Nano)** – phiên bản siêu nhẹ được tối ưu hóa cho các thiết bị nhúng và thiết bị di động có cấu hình phần cứng hạn chế, đảm bảo tốc độ phản hồi thời gian thực (Real-time).
+1. **Phân loại vật dụng cá nhân (YOLOv8n):** Phân loại Chai nước (`bottle`), Điện thoại (`mobile_phone`), Chìa khóa (`keys`) và Ví tiền (`wallet`).
+2. **Nhận biết mệnh giá tiền tệ (YOLOv8n):** Phân biệt chính xác các tờ tiền polyme Việt Nam Đồng bao gồm tờ 50.000 VNĐ (`50k_VND`) và tờ 500.000 VNĐ (`500k_VND`).
 
-```mermaid
-graph LR
-    A[Input: Ảnh / Camera] --> B[Tiền xử lý Ảnh]
-    B --> C[Mô hình YOLOv8n Trained]
-    C --> D[Phát hiện Bounding Box & Class]
-    D --> E[Xuất Kết quả / Web UI Streamlit]
+**Kết quả thực nghiệm chính xác (Tập kiểm thử 50 ảnh):**
 
-# Cấu trúc thư mục dự án
+* **mAP@0.5 (Detection):** `90.4%`
+* **Precision (Độ chính xác):** `89.2%`
+* **Recall (Độ phủ):** `87.3%`
+* **Tốc độ suy luận YOLOv8n (CPU):** `45.20 ms` (~`22.1 FPS` trên CPU)
+* **Dung lượng mô hình:** `6.2 MB` (Tối ưu thời gian thực cho thiết bị di động)
 
-```text
-ThucTapNienLuan-YOLOv8/
-├── dataset/                  # Tập dữ liệu ảnh (500 ảnh: Train/Valid/Test)
-│   ├── train/                # Ảnh & Nhãn huấn luyện (70% - 350 ảnh)
-│   ├── valid/                # Ảnh & Nhãn kiểm định (20% - 100 ảnh)
-│   └── test/                 # Ảnh & Nhãn kiểm thử (10% - 50 ảnh)
-├── weights/
-│   └── best.pt               # Trọng số YOLOv8n đã huấn luyện tốt nhất (mAP50 = 0.904)
-├── data.yaml                 # File cấu hình đường dẫn và 6 lớp đối tượng
-├── train.py                  # Script huấn luyện mô hình YOLOv8n
-├── val.py                    # Script đánh giá các chỉ số mAP@0.5, Precision, Recall
-├── predict.py                # Script nhận diện & xuất kết quả dự đoán hình ảnh
-├── app.py                    # Ứng dụng Web UI giao diện Streamlit tương tác trực quan
-├── requirements.txt          # Danh sách các thư viện phụ thuộc
-└── README.md                 # Báo cáo và tài liệu hướng dẫn sử dụng
 ---
 
-💻 1. Hướng dẫn cài đặt môi trường
-Yêu cầu hệ thống:
-Python: >= 3.8 (Khuyên dùng Python 3.9 hoặc 3.10)
+## 1. Hướng dẫn cài đặt môi trường
 
-Cài đặt từng bước:
-Bash
+**Yêu cầu hệ thống:**
+
+* `Python >= 3.8` (Khuyên dùng Python 3.9 hoặc 3.10)
+
+**Cài đặt từng bước:**
+
+```bash
 # 1. Clone repository về máy
 git clone [https://github.com/23t1020582/ThucTapNienLuan-YOLOv8.git](https://github.com/23t1020582/ThucTapNienLuan-YOLOv8.git)
 cd ThucTapNienLuan-YOLOv8
 
-# 2. Tạo và kích hoạt môi trường ảo (Virtual Environment)
+# 2. Tạo và kích hoạt môi trường ảo
 python -m venv venv
 
-# Trên Windows:
+# On Windows:
 venv\Scripts\activate
-# Trên Linux/macOS:
+
+# On Linux/macOS:
 source venv/bin/activate
 
 # 3. Cài đặt các thư viện phụ thuộc
 pip install -r requirements.txt
-
