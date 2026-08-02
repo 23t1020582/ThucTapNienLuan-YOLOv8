@@ -1,70 +1,69 @@
-Hệ Thống Nhận Diện Biển Số Và Phân Loại Phương Tiện Tự Động
-Báo cáo Thực tập Niên luận
-Đề tài: Nghiên cứu, xây dựng ứng dụng nhận diện biển số và phân loại phương tiện tại bãi xe thông minh dựa trên YOLOv8 và PaddleOCR
-Tác giả: [Trần Văn Pha] - [23T1020376]
 
-Giới thiệu dự án
-Dự án xây dựng chuỗi xử lý End-to-End thực hiện 2 nhiệm vụ chính phục vụ quản lý bãi giữ xe thông minh:
+# Hệ Thống Nhận Diện Vật Dụng Cá Nhân & Mệnh Giá Tiền Hỗ Trợ Người Thị Giác Kém
 
-Phân loại phương tiện & Định vị biển số (YOLOv8n): Phân loại Ô tô (car), Xe máy (motorcycle) và định vị vùng Biển số (license_plate).
-Nhận dạng ký tự quang học (PP-OCRv3): Trích xuất chuỗi ký tự trên biển số xe (hỗ trợ cả biển ô tô 1 dòng dài và biển xe máy 2 dòng vuông).
-Kết quả thực nghiệm chính xác (Tập kiểm thử 50 ảnh):
-mAP@0.5 (Detection): 99.5%
-Tỷ lệ nhận dạng đúng OCR (Exact Match): 90.0%
-Tốc độ suy luận YOLOv8n (CPU): 110.75 ms
-Thời gian xử lý OCR (CPU): 206.09 ms
-Tổng độ trễ End-to-End: 316.84 ms (~3.16 FPS trên CPU Intel Core i7-13620H)
-1. Hướng dẫn cài đặt môi trường
+[![Python](https://img.shields.io/badge/Python-3.9%2B-blue.svg)](https://www.python.org/)
+[![YOLOv8](https://img.shields.io/badge/YOLOv8-Ultralytics-realtime.svg)](https://github.com/ultralytics/ultralytics)
+[![Streamlit](https://img.shields.io/badge/Streamlit-UI%20App-red.svg)](https://streamlit.io/)
+[![License](https://img.shields.io/badge/Academic-Thesis%20Report-green.svg)]()
+
+> **Báo cáo Thực tập Niên luận**  
+> **Đề tài:** Xây dựng ứng dụng phân loại vật dụng cá nhân thiết yếu hỗ trợ sinh hoạt độc lập cho người khiếm thị dựa trên mô hình YOLOv8n trên nền tảng Streamlit Localhost  
+> **Tác giả:** [Họ và Tên Sinh Viên] - [Mã Số Sinh Viên]  
+> **Khoa/Trường:** Công nghệ Thông tin  
+> **Repository:** [ThucTapNienLuan-YOLOv8](https://github.com/23t1020582/ThucTapNienLuan-YOLOv8)
+
+---
+
+## 📌 1. Giới thiệu tổng quan
+
+Dự án xây dựng một giải pháp thị giác máy tính **End-to-End** hỗ trợ người thị giác kém/khiếm thị trong việc nhận biết các vật dụng sinh hoạt hàng ngày và phân biệt các mệnh giá tiền Việt Nam Đồng (VND). 
+
+Hệ thống sử dụng kiến trúc mô hình **YOLOv8n (Nano)** – phiên bản siêu nhẹ được tối ưu hóa cho các thiết bị nhúng và thiết bị di động có cấu hình phần cứng hạn chế, đảm bảo tốc độ phản hồi thời gian thực (Real-time).
+
+```mermaid
+graph LR
+    A[Input: Ảnh / Camera] --> B[Tiền xử lý Ảnh]
+    B --> C[Mô hình YOLOv8n Trained]
+    C --> D[Phát hiện Bounding Box & Class]
+    D --> E[Xuất Kết quả / Web UI Streamlit]
+
+# Cấu trúc thư mục dự án
+
+```text
+ThucTapNienLuan-YOLOv8/
+├── dataset/                  # Tập dữ liệu ảnh (500 ảnh: Train/Valid/Test)
+│   ├── train/                # Ảnh & Nhãn huấn luyện (70% - 350 ảnh)
+│   ├── valid/                # Ảnh & Nhãn kiểm định (20% - 100 ảnh)
+│   └── test/                 # Ảnh & Nhãn kiểm thử (10% - 50 ảnh)
+├── weights/
+│   └── best.pt               # Trọng số YOLOv8n đã huấn luyện tốt nhất (mAP50 = 0.904)
+├── data.yaml                 # File cấu hình đường dẫn và 6 lớp đối tượng
+├── train.py                  # Script huấn luyện mô hình YOLOv8n
+├── val.py                    # Script đánh giá các chỉ số mAP@0.5, Precision, Recall
+├── predict.py                # Script nhận diện & xuất kết quả dự đoán hình ảnh
+├── app.py                    # Ứng dụng Web UI giao diện Streamlit tương tác trực quan
+├── requirements.txt          # Danh sách các thư viện phụ thuộc
+└── README.md                 # Báo cáo và tài liệu hướng dẫn sử dụng
+---
+
+💻 1. Hướng dẫn cài đặt môi trường
 Yêu cầu hệ thống:
-Python >= 3.8 (Khuyên dùng Python 3.9 hoặc 3.10)
-Cài đặt từng bước:
-# 1. Clone repository về máy
-git clone https://github.com/phatran17805/bien-so-xe-yolov8-paddleocr.git
-cd bien-so-xe-yolov8-paddleocr
+Python: >= 3.8 (Khuyên dùng Python 3.9 hoặc 3.10)
 
-# 2. Tạo và kích hoạt môi trường ảo 
+Cài đặt từng bước:
+Bash
+# 1. Clone repository về máy
+git clone [https://github.com/23t1020582/ThucTapNienLuan-YOLOv8.git](https://github.com/23t1020582/ThucTapNienLuan-YOLOv8.git)
+cd ThucTapNienLuan-YOLOv8
+
+# 2. Tạo và kích hoạt môi trường ảo (Virtual Environment)
 python -m venv venv
 
-# On Windows:
+# Trên Windows:
 venv\Scripts\activate
-# On Linux/macOS:
+# Trên Linux/macOS:
 source venv/bin/activate
 
 # 3. Cài đặt các thư viện phụ thuộc
 pip install -r requirements.txt
-2. Hướng dẫn tải & Chuẩn bị Tập dữ liệu (Dataset)
-Tải dữ liệu: Tải file nén dữ liệu data.zip tại Link Google Drive của bạn ở đây và giải nén vào thư mục gốc của dự án.
 
-Cấu trúc thư mục dự án:
-
-├── weights/
-│   └── best.pt               # Trọng số YOLOv8n đã huấn luyện tốt nhất
-├── train/
-│   ├── images/               # Ảnh huấn luyện (400 ảnh)
-│   └── labels/               # Nhãn huấn luyện (.txt format YOLO)
-├── val/
-│   ├── images/               # Ảnh kiểm định (50 ảnh)
-│   └── labels/               # Nhãn kiểm định (.txt format YOLO)
-└── test/
-    ├── images/               # Ảnh kiểm thử (50 ảnh)
-    └── labels/               # Nhãn kiểm thử (.txt format YOLO)
-├── data.yaml                 # File khai báo tập dữ liệu và các lớp
-├── read_plate_paddle.py      # Module trích xuất và đọc ký tự OCR
-├── train.py                  # Script huấn luyện mô hình YOLOv8n
-├── val.py                    # Script tính toán chỉ số mAP50, Precision, Recall
-├── predict.py                # Script chạy thử nghiệm nhận diện & vẽ khung ảnh
-├── benchmark.py              # Script đánh giá hiệu năng và bấm giờ End-to-End
-├── requirements.txt          # Danh sách thư viện cần thiết
-└── README.md                 # Tài liệu hướng dẫn
-Quản lý Trọng số: Trọng số tốt nhất sau khi huấn luyện best.pt được lưu trữ tại thư mục weights/best.pt. File trọng số mặc định yolov8n.pt sẽ tự động được tải về từ Ultralytics khi chạy lệnh huấn luyện lần đầu.
-Lệnh chạy huấn luyện (Train) và đánh giá (Evaluation):
-Chạy script huấn luyện mô hình YOLOv8n trên tập dữ liệu đã chuẩn bị:
-python train.py
-Đánh giá mô hình YOLOv8:
-python val.py
-Thử nghiệm dự đoán và vẽ khung trên tập test:
-python predict.py
-Đo độ trễ hệ thống:
-python benchmark.py
-Chạy thử nghiệm nhận diện ký tự OCR trên tập test:
-python read_plate_paddle.py
