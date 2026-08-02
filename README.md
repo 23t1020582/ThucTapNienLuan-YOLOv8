@@ -31,7 +31,7 @@ Dự án xây dựng chuỗi xử lý End-to-End thực hiện 2 nhiệm vụ ch
 
 **Cài đặt từng bước:**
 
-```bash
+
 # 1. Clone repository về máy
 git clone [https://github.com/23t1020582/ThucTapNienLuan-YOLOv8.git](https://github.com/23t1020582/ThucTapNienLuan-YOLOv8.git)
 cd ThucTapNienLuan-YOLOv8
@@ -47,4 +47,54 @@ source venv/bin/activate
 
 # 3. Cài đặt các thư viện phụ thuộc
 pip install -r requirements.txt
+----
+
+2. Hướng dẫn tải & Chuẩn bị Tập dữ liệu (Dataset)
+Tải dữ liệu: Tải file nén dữ liệu dataset.zip và giải nén vào thư mục gốc của dự án.
+
+Cấu trúc thư mục dự án:
+
+Plaintext
+├── weights/
+│   └── best.pt               # Trọng số YOLOv8n đã huấn luyện tốt nhất
+├── dataset/
+│   ├── train/                # Tập ảnh & nhãn huấn luyện (350 ảnh)
+│   ├── valid/                # Tập ảnh & nhãn kiểm định (100 ảnh)
+│   └── test/                 # Tập ảnh & nhãn kiểm thử (50 ảnh)
+├── data.yaml                 # File khai báo tập dữ liệu và 6 lớp đối tượng
+├── train.py                  # Script huấn luyện mô hình YOLOv8n
+├── val.py                    # Script tính toán chỉ số mAP50, Precision, Recall
+├── predict.py                # Script chạy thử nghiệm nhận diện & vẽ khung ảnh
+├── benchmark.py              # Script đánh giá hiệu năng và đo tốc độ suy luận (FPS)
+├── app.py                    # Giao diện Web App Streamlit tương tác người dùng
+├── requirements.txt          # Danh sách thư viện cần thiết
+└── README.md                 # Tài liệu hướng dẫn dự án
+Quản lý Trọng số: Trọng số tốt nhất sau khi huấn luyện best.pt được lưu trữ tại thư mục weights/best.pt. File trọng số mặc định yolov8n.pt sẽ tự động được tải về từ Ultralytics khi chạy lệnh huấn luyện lần đầu.
+
+Lệnh chạy huấn luyện (Train) và đánh giá (Evaluation)
+Chạy script huấn luyện mô hình YOLOv8n trên tập dữ liệu đã chuẩn bị:
+
+Bash
+python train.py
+Đánh giá mô hình YOLOv8:
+
+Bash
+python val.py
+Thử nghiệm dự đoán và vẽ khung trên tập test:
+
+Bash
+python predict.py
+Đo tốc độ trễ & hiệu năng hệ thống (Benchmark):
+
+Bash
+python benchmark.py
+Chạy ứng dụng giao diện trực quan Streamlit:
+
+Bash
+streamlit run app.py
+
+
+
+
+
 
