@@ -47,37 +47,3 @@ source venv/bin/activate
 
 # 3. Cài đặt các thư viện phụ thuộc
 pip install -r requirements.txt
-bash```
-
-2. Cấu trúc thư mục dự án
-Plaintext
-├── weights/
-│   └── best.pt               # Trọng số YOLOv8n đã huấn luyện tốt nhất
-├── dataset/
-│   ├── train/                # Tập ảnh & nhãn huấn luyện (350 ảnh)
-│   ├── valid/                # Tập ảnh & nhãn kiểm định (100 ảnh)
-│   └── test/                 # Tập ảnh & nhãn kiểm thử (50 ảnh)
-├── data.yaml                 # File khai báo tập dữ liệu và 6 lớp đối tượng
-├── train.py                  # Script huấn luyện mô hình YOLOv8n
-├── val.py                    # Script tính toán chỉ số mAP50, Precision, Recall
-├── predict.py                # Script chạy thử nghiệm nhận diện & vẽ khung ảnh
-├── app.py                    # Giao diện Web App Streamlit tương tác người dùng
-├── requirements.txt          # Danh sách thư viện cần thiết
-└── README.md                 # Tài liệu hướng dẫn dự án
-3. Lệnh chạy huấn luyện (Train) và đánh giá (Evaluation)
-Chạy script huấn luyện mô hình YOLOv8n trên tập dữ liệu đã chuẩn bị:
-
-Bash
-python train.py
-Đánh giá mô hình YOLOv8:
-
-Bash
-python val.py
-Thử nghiệm dự đoán và vẽ khung trên tập test:
-
-Bash
-python predict.py
-Chạy ứng dụng giao diện trực quan Streamlit:
-
-Bash
-streamlit run app.py
