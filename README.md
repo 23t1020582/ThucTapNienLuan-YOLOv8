@@ -53,7 +53,7 @@ pip install -r requirements.txt
 Tải dữ liệu: Tải file nén dữ liệu dataset.zip và giải nén vào thư mục gốc của dự án.
 
 Cấu trúc thư mục dự án:
-
+'''base
 Plaintext
 ├── weights/
 │   └── best.pt               # Trọng số YOLOv8n đã huấn luyện tốt nhất
