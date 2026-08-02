@@ -2,7 +2,7 @@
 
 > Báo cáo Thực tập Niên luận  
 > Đề tài: Nghiên cứu, xây dựng ứng dụng nhận diện vật dụng cá nhân và mệnh giá tiền tệ hỗ trợ người thị giác kém dựa trên YOLOv8  
-> Tác giả: [Phạm Quang Tuân] - [23t1020582]
+> Tác giả: Phạm Quang Tuân - 23t1020582
 
 ---
 
@@ -47,15 +47,8 @@ source venv/bin/activate
 
 # 3. Cài đặt các thư viện phụ thuộc
 pip install -r requirements.txt
-
-
-
----
-
-## 2.cấu trúc thư mục dự án
-
-```bash
-
+2. Cấu trúc thư mục dự án
+Plaintext
 ├── weights/
 │   └── best.pt               # Trọng số YOLOv8n đã huấn luyện tốt nhất
 ├── dataset/
@@ -69,18 +62,20 @@ pip install -r requirements.txt
 ├── app.py                    # Giao diện Web App Streamlit tương tác người dùng
 ├── requirements.txt          # Danh sách thư viện cần thiết
 └── README.md                 # Tài liệu hướng dẫn dự án
-
-##3.Lệnh chạy huấn luyện (Train) và đánh giá (Evaluation)
+3. Lệnh chạy huấn luyện (Train) và đánh giá (Evaluation)
 Chạy script huấn luyện mô hình YOLOv8n trên tập dữ liệu đã chuẩn bị:
 
-#python train.py
+Bash
+python train.py
 Đánh giá mô hình YOLOv8:
 
-#python val.py
+Bash
+python val.py
 Thử nghiệm dự đoán và vẽ khung trên tập test:
 
-#python predict.py
+Bash
+python predict.py
 Chạy ứng dụng giao diện trực quan Streamlit:
 
-#streamlit run app.py
----
+Bash
+streamlit run app.py
