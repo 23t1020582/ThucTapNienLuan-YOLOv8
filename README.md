@@ -1,4 +1,4 @@
-# 🚀 Hệ Thống Nhận Diện Vật Dụng Cá Nhân Và Mệnh Giá Tiền Tự Động
+#  Hệ Thống Nhận Diện Vật Dụng Cá Nhân Và Mệnh Giá Tiền Tự Động
 
 > **Thực tập Niên luận**  
 > **Đề tài:** Xây dựng ứng dụng phân loại vật dụng cá nhân thiết yếu hỗ trợ sinh hoạt độc lập cho người khiếm thị dựa trên mô hình **YOLOv8n** trên nền tảng **Streamlit**.
@@ -15,23 +15,23 @@ Hệ thống hoạt động theo thời gian thực thông qua webcam và cung c
 
 ---
 
-# ✨ Chức năng
+# Chức năng
 
-## 🧴 Nhận diện vật dụng cá nhân
+## Nhận diện vật dụng cá nhân
 
 - Bottle
 - Mobile Phone
 - Keys
 - Wallet
 
-## 💵 Nhận diện mệnh giá tiền
+##  Nhận diện mệnh giá tiền
 
 - 50.000 VNĐ
 - 500.000 VNĐ
 
 ---
 
-# 📊 Kết quả thực nghiệm
+#  Kết quả thực nghiệm
 
 | Chỉ số | Giá trị |
 |---------|---------|
@@ -44,7 +44,7 @@ Hệ thống hoạt động theo thời gian thực thông qua webcam và cung c
 
 ---
 
-# 🛠 Công nghệ sử dụng
+#  Công nghệ sử dụng
 
 - Python
 - YOLOv8n
@@ -56,7 +56,7 @@ Hệ thống hoạt động theo thời gian thực thông qua webcam và cung c
 
 ---
 
-# 📂 Cấu trúc thư mục
+#  Cấu trúc thư mục
 
 ```text
 ThucTapNienLuan-YOLOv8/
@@ -164,7 +164,7 @@ python predict.py
 
 ---
 
-# ⚡ Benchmark
+#  Benchmark
 
 ```bash
 python benchmark.py
@@ -172,7 +172,7 @@ python benchmark.py
 
 ---
 
-# 🌐 Chạy ứng dụng
+#  Chạy ứng dụng
 
 ```bash
 streamlit run app.py
@@ -186,7 +186,7 @@ http://localhost:8501
 
 ---
 
-# 📷 Demo
+#  Demo
 
 > Thêm ảnh hoặc GIF demo của hệ thống tại đây.
 
@@ -196,7 +196,7 @@ demo/demo.gif
 
 ---
 
-# 📚 Dataset
+#  Dataset
 
 Tập dữ liệu gồm **500 ảnh**, chia thành:
 
@@ -208,7 +208,7 @@ Tập dữ liệu gồm **500 ảnh**, chia thành:
 
 ---
 
-# 👨‍💻 Tác giả
+#  Tác giả
 
 **Phạm Quang Tuân**
 
